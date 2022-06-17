@@ -1,11 +1,10 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import SignIn from "./components/login/SignIn";
 import SignUp from "./components/login/SignUp";
-import NavBar from "./components/login/NavBar";
-import Home from "./components/login/Home";
+import NavBar from "./components/NavBar";
+import Home from "./components/Home";
 function App() {
   return (
     <div className="App">

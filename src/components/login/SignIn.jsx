@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { isLoggedIn } from "../../store/usersSlice";
+import { currentUserIdSetted } from "../../store/statusSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 //mui/material
 import Avatar from "@mui/material/Avatar";
@@ -15,6 +18,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Alert from "@mui/material/Alert";
 
 function Copyright(props) {
   return (
@@ -36,6 +40,7 @@ const theme = createTheme();
 
 export default function SignIn() {
   const [data, setData] = useState({ email: "", password: "" });
+  const [signInFailed, setSignInFailed] = useState(false);
   const [errors, setErrors] = useState({ email: null, password: "" });
   const Joi = require("joi-browser");
   const navigate = useNavigate();
@@ -64,12 +69,19 @@ export default function SignIn() {
     return error ? error.details[0].message : null;
   };
 
+  const dispatch = useDispatch();
+  const logInStatus = useSelector(isLoggedIn(data));
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const errors = validate();
     setErrors(errors || {});
-    console.log(data, Boolean(errors));
+
     if (errors) return;
+    if (logInStatus.status === "success") {
+      navigate("/home");
+      dispatch(currentUserIdSetted({ userId: logInStatus.userId }));
+    } else setSignInFailed(true);
     // doSubmit
   };
   const handleChange = ({ currentTarget: input }) => {
@@ -107,44 +119,60 @@ export default function SignIn() {
             noValidate
             sx={{ mt: 1 }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={data["email"]}
-              onChange={handleChange}
-              error={Boolean(errors["email"])}
-              helperText={errors["email"]}
-            />
-
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={data["password"]}
-              onChange={handleChange}
-              error={Boolean(errors["password"])}
-              helperText={errors["password"]}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            <Grid container direction="row" spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={data["email"]}
+                  onChange={handleChange}
+                  error={Boolean(errors["email"])}
+                  helperText={errors["email"]}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  value={data["password"]}
+                  onChange={handleChange}
+                  error={Boolean(errors["password"])}
+                  helperText={errors["password"]}
+                />
+              </Grid>
+              <Grid item>
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+              </Grid>
+              {signInFailed && (
+                <Grid item xs={12}>
+                  <Alert
+                    severity="error"
+                    onClose={() => setSignInFailed(false)}
+                    sx={{ mb: 2 }}
+                  >
+                    Incorrect email address or password.
+                  </Alert>
+                </Grid>
+              )}
+            </Grid>
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 2, mb: 2 }}
               disabled={Boolean(errors["password"]) || Boolean(errors["email"])}
             >
               Sign In
@@ -161,7 +189,7 @@ export default function SignIn() {
                   onClick={() => navigate("/signup")}
                   sx={{ cursor: "pointer" }}
                 >
-                  {"Don't have an account? Sign Up"}
+                  {"Don't have an account? Sign up"}
                 </Link>
               </Grid>
             </Grid>

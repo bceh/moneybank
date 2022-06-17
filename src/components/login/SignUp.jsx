@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  isEmailExist,
+  userRegistered,
+  getUserNumber,
+} from "../../store/usersSlice";
+import { currentUserIdSetted } from "../../store/statusSlice";
 //mui/material
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -14,6 +21,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Alert from "@mui/material/Alert";
 
 function Copyright(props) {
   return (
@@ -34,6 +42,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [data, setData] = useState({
     firstName: "",
@@ -42,18 +51,21 @@ export default function SignUp() {
     password: "",
   });
   const [errors, setErrors] = useState({ email: "", password: "" });
-  const Joi = require("joi-browser");
 
+  const isEmailInvaild = useSelector(isEmailExist(data.email));
+  const userId = useSelector(getUserNumber);
+  const [isRegisterFailed, setIsRegisterFailed] = useState(false);
+
+  const Joi = require("joi-browser");
   const schema = {
-    firstName: Joi.string().required().label("firstName"),
-    lastName: Joi.string().required().label("lastName"),
+    firstName: Joi.string().required().label("First Name"),
+    lastName: Joi.string().required().label("Last Name"),
     email: Joi.string()
       .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
       .required()
-      .label("email"),
-    password: Joi.string().required().min(8).label("password"),
+      .label("Email"),
+    password: Joi.string().required().min(8).label("Password"),
   };
-
   const validate = () => {
     const { error } = Joi.validate(data, schema, { abortEarly: false });
     if (!error) return null;
@@ -63,7 +75,6 @@ export default function SignUp() {
     });
     return errors;
   };
-
   const validateProperty = ({ name, value }) => {
     const obj = { [name]: value };
     const newSchema = Joi.object({ [name]: schema[name] });
@@ -78,6 +89,11 @@ export default function SignUp() {
     console.log(data);
     if (errors) return;
     // doSubmit
+    if (!isEmailInvaild) {
+      navigate("/home");
+      dispatch(userRegistered(data));
+      dispatch(currentUserIdSetted({ userId: userId }));
+    } else setIsRegisterFailed(true);
   };
   const handleChange = ({ currentTarget: input }) => {
     const newErrors = { ...errors };
@@ -173,11 +189,28 @@ export default function SignUp() {
                   helperText={errors["password"]}
                 />
               </Grid>
+              <Grid item>
+                <FormControlLabel
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="I want to receive promotions and updates."
+                />
+              </Grid>
+              {isRegisterFailed && (
+                <Grid item xs={12}>
+                  <Alert
+                    severity="error"
+                    onClose={() => setIsRegisterFailed(false)}
+                    sx={{ mb: 2 }}
+                  >
+                    A user with this email Address already exists. Please try
+                    again.
+                  </Alert>
+                </Grid>
+              )}
             </Grid>
-            <FormControlLabel
-              control={<Checkbox value="allowExtraEmails" color="primary" />}
-              label="I want to receive promotions and updates via email."
-            />
+
             <Button
               type="submit"
               fullWidth
