@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState = {};
+const initialState = { currentUserId: -1 };
 
 export const usersSlice = createSlice({
   name: "status",

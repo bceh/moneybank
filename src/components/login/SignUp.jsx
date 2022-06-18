@@ -86,7 +86,6 @@ export default function SignUp() {
     event.preventDefault();
     const errors = validate();
     setErrors(errors || {});
-    console.log(data);
     if (errors) return;
     // doSubmit
     if (!isEmailInvaild) {
@@ -95,6 +94,7 @@ export default function SignUp() {
       dispatch(currentUserIdSetted({ userId: userId }));
     } else setIsRegisterFailed(true);
   };
+
   const handleChange = ({ currentTarget: input }) => {
     const newErrors = { ...errors };
     const errorMessage = validateProperty(input);

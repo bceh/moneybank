@@ -21,10 +21,17 @@ export const usersSlice = createSlice({
         id: ++lastId,
       });
     },
+    userChangedById: (state, action) => {
+      const userId = action.payload.userId;
+      state[userId] = {
+        ...state[userId],
+        ...action.payload.newData,
+      };
+    },
   },
 });
 
-export const { userRegistered } = usersSlice.actions;
+export const { userRegistered, userChangedById } = usersSlice.actions;
 
 export default usersSlice.reducer;
 
@@ -45,3 +52,19 @@ export const isEmailExist = (email) => (state) =>
   state.users.some((user) => email === user.email);
 
 export const getUserNumber = (state) => state.users.length;
+
+export const getBasicInfoById = (id) => (state) => {
+  return {
+    firstName: state.users[id].firstName,
+    lastName: state.users[id].lastName,
+    email: state.users[id].email,
+  };
+};
+
+export const comparePasswordId = (password, id) => (state) =>
+  password === state.users[id].password;
+
+export const compareEmailPasswordId =
+  ({ email, password }, id) =>
+  (state) =>
+    email === state.users[id].email && password === state.users[id].password;
