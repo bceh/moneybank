@@ -41,7 +41,7 @@ const AccountDeletion = () => {
 
   const handleDelete = () => {
     if (!isAbleDelete) {
-      setDeleteErrorMessage("Incorrected Email Address or Password");
+      setDeleteErrorMessage("Incorrect Email Address or Password");
     } else {
       const newData = { lastName: "", firstName: "", email: "", password: "" };
       dispatch(userChangedById({ userId, newData }));

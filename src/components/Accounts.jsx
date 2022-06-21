@@ -1,13 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import {
   dataAdded,
   dataDeleted,
   accAdded,
   accModified,
   accDeleted,
-  transAdded,
-  transModified,
-  transDeleted,
   getData,
   getAllAccById,
   getAllTransById,
@@ -16,6 +14,7 @@ import {
 import Transaction from "./Transaction";
 import Container from "@mui/material/Container";
 import AccountDial from "./AccountDial";
+import TransactionFilter from "./TransactionFilter";
 
 const Accounts = () => {
   const userId = useSelector((state) => state.status.currentUserId);
@@ -60,84 +59,32 @@ const Accounts = () => {
   const handlePrintAccount = () => {
     console.log(accounts);
   };
-  const handleAddTransition = () => {
-    dispatch(
-      transAdded({
-        userId,
-        transAdded: {
-          accId: 1,
-          amount: 500,
-          description: "iphone",
-          payee: "apple",
-          cateId: 0,
-          date: "2020-03-05",
-          time: "15:30",
-        },
-      })
-    );
+
+  const [transFilter, setTransFilter] = useState([-1, 1]);
+
+  const accIds = accounts.map((acc) => acc.accId);
+  const [accFilter, setAccFilter] = useState(accIds);
+  const handleFilter = ({ transTypes, accIds }) => {
+    setTransFilter(transTypes);
+    setAccFilter(accIds);
   };
 
-  const handleModifyTransition = () => {
-    dispatch(
-      transModified({
-        userId,
-        transId: 0,
-        transModified: {
-          accId: 1,
-          amount: 500,
-          description: "iphone",
-          payee: "apple",
-          cateId: 1,
-          date: "2020-03-05",
-          time: "14:30",
-        },
-      })
-    );
-  };
-
-  const handleDeleteTransition = (transId) => {
-    dispatch(
-      transDeleted({
-        userId,
-        transId,
-      })
-    );
-  };
-
-  const handlePrintTransition = () => {
-    console.log(transactions);
-  };
+  const transactionsDisplayed = transactions.filter(
+    (trans) =>
+      transFilter.includes(trans.transType) && accFilter.includes(trans.accId)
+  );
   return (
-    <div>
+    <React.Fragment>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <div>
-          <button onClick={() => console.log(data)}>PrintData</button>
-          <button onClick={handleAddData}>AddData</button>
-          <button onClick={handleDeleteData}>DeleteData</button>
-        </div>
-        <div>
-          <button onClick={handleAddAccount}>AddAccount</button>
-          <button onClick={handlePrintAccount}>PrintAccount</button>
-          <button onClick={handleModifyAccount}>ModifyAccount</button>
-          <button onClick={handleDeleteAccount}>DeleteAccount</button>
-          {accounts.map((acc) => (
-            <div
-              name={acc.accId}
-              key={acc.accId}
-              onClick={() => handleDeleteAccount(acc.accId)}
-            >
-              {acc.accName}_{acc.openingBalance}_{acc.accId}
-            </div>
-          ))}
-        </div>
-        <div>
-          {transactions.map((trans) => {
+        <TransactionFilter accounts={accounts} onFilter={handleFilter} />
+        <Container>
+          {transactionsDisplayed.map((trans) => {
             return <Transaction key={trans.transId} {...trans} />;
           })}
-        </div>
+        </Container>
       </Container>
       <AccountDial />
-    </div>
+    </React.Fragment>
   );
 };
 

@@ -56,7 +56,7 @@ const Security = () => {
     } else if (!isPasswordCorrect) {
       setPasswordMessage({
         type: "error",
-        message: "The old password you have entered is incorrected",
+        message: "The old password you have entered is incorrect",
       });
     } else {
       const newData = { password: password.newPassword };

@@ -1,38 +1,38 @@
 import React, { useState, useEffect, useRef } from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
 
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import Paper from "@mui/material/Paper";
 
 import TransactionDisplay from "./TransactionDisplay";
 import TransactionModifier from "./TransactionModifier";
 
 export default function Transaction(props) {
-  const { transId } = props;
+  const { transId, transType } = props;
 
   const [expanded, setExpanded] = useState(false);
-  const handleChange = () => {
+  const handleClick = () => {
     setExpanded((prev) => !prev);
   };
 
   return (
     <Box>
-      <Accordion
-        expanded={expanded}
-        onChange={handleChange}
+      <Paper
         id={transId}
         key={transId}
-        sx={{ "&:hover": { bgcolor: "#F0F4F6" } }}
+        sx={{
+          p: 1,
+          pr: 1.5,
+          borderRight: `5px solid ${transType === -1 ? "red" : "green"}`,
+          "&:hover": { bgcolor: "#F0F4F6" },
+          cursor: "pointer",
+        }}
       >
-        <AccordionSummary>
+        <Box onClick={handleClick}>
           <TransactionDisplay {...props} />
-        </AccordionSummary>
-        <AccordionDetails>
-          <TransactionModifier {...props} />
-        </AccordionDetails>
-      </Accordion>
+        </Box>
+        {expanded && <TransactionModifier {...props} />}
+      </Paper>
 
       <Divider />
     </Box>
