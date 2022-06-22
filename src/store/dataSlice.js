@@ -1,3 +1,4 @@
+import { TramSharp } from "@mui/icons-material";
 import { createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
 import initialState from "../data/user1Data";
@@ -104,5 +105,23 @@ export const getAccById = (userId, accId) => (state) =>
 
 export const getCateById = (userId, cateId) => (state) =>
   state.data[userId].categories[cateId].cateName;
+
+export const getAccBalanceById = (userId, accId) => (state) => {
+  state.data[userId].transactions
+    .filter((trans) => trans.accId === accId)
+    .reduce((sum, trans) => sum + parseInt(trans.type) * trans.amount, 0);
+};
+
+export const getAccBalancesById = (userId) => (state) => {
+  return _.reduce(
+    state.data[userId].transactions,
+    (obj, trans) => {
+      obj[trans.accId] =
+        (obj[trans.accId] || 0) + trans.amount * trans.transType;
+      return obj;
+    },
+    {}
+  );
+};
 
 export default dataSlice.reducer;
