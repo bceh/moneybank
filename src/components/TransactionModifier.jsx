@@ -1,15 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
-import { transModified, transDeleted } from "../store/dataSlice";
+import { transModified, transDeleted, getTransById } from "../store/dataSlice";
 import TransactionTable, { validateData } from "./TransactionTable";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import React, { useState } from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+
+import React, { useState, useEffect } from "react";
 
 const TransactionModifier = (props) => {
-  const { transId } = props;
+  const { open, onClose, data, setData } = props;
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.status.currentUserId);
-  const [data, setData] = useState({ ...props });
   const [error, setError] = useState(null);
 
   const transType = data.transType;
@@ -50,15 +53,17 @@ const TransactionModifier = (props) => {
       );
       setError(null);
     }
+    handleClose();
   };
 
   const handleDeleteTransition = () => {
     dispatch(
       transDeleted({
         userId,
-        transId,
+        transId: data.transId,
       })
     );
+    handleClose();
   };
   const setTransType = (type) => {
     if (type !== null) {
@@ -67,37 +72,49 @@ const TransactionModifier = (props) => {
       setData(newData);
     }
   };
+  const handleClose = () => {
+    onClose();
+    setError(null);
+  };
+
   return (
-    <Grid container spacing={1}>
-      <TransactionTable
-        data={data}
-        setData={setData}
-        error={error}
-        transType={transType}
-        onSetTransType={setTransType}
-      ></TransactionTable>
-      <Grid item xs={6} sm={9}></Grid>
-      <Grid item xs={3} sm={1.5}>
+    <Dialog fullWidth={true} open={open} onClose={handleClose}>
+      <DialogTitle sx={{ color: transType === -1 ? "red" : "green" }}>
+        Change {transType === -1 ? "Expense" : "Income"}
+      </DialogTitle>
+      <DialogContent>
+        <TransactionTable
+          data={data}
+          setData={setData}
+          error={error}
+          transType={transType}
+          onSetTransType={setTransType}
+        ></TransactionTable>
+      </DialogContent>
+      <DialogActions>
         <Button
-          fullWidth
+          variant="outlined"
+          sx={{ borderColor: "gray", color: "gray" }}
+          onClick={handleClose}
+        >
+          Cancel
+        </Button>
+        <Button
           variant="outlined"
           color="primary"
           onClick={handleSaveTransition}
         >
           Save
         </Button>
-      </Grid>
-      <Grid item xs={3} sm={1.5}>
         <Button
-          fullWidth
           variant="outlined"
           color="error"
           onClick={handleDeleteTransition}
         >
           Delete
         </Button>
-      </Grid>
-    </Grid>
+      </DialogActions>
+    </Dialog>
   );
 };
 

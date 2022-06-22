@@ -5,14 +5,12 @@ import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 
 import TransactionDisplay from "./TransactionDisplay";
-import TransactionModifier from "./TransactionModifier";
 
 export default function Transaction(props) {
-  const { transId, transType } = props;
+  const { transId, transType, onClick } = props;
 
-  const [expanded, setExpanded] = useState(false);
-  const handleClick = () => {
-    setExpanded((prev) => !prev);
+  const handleClick = (transId) => {
+    onClick(transId);
   };
 
   return (
@@ -28,12 +26,10 @@ export default function Transaction(props) {
           cursor: "pointer",
         }}
       >
-        <Box onClick={handleClick}>
+        <Box onClick={() => handleClick(transId)}>
           <TransactionDisplay {...props} />
         </Box>
-        {expanded && <TransactionModifier {...props} />}
       </Paper>
-
       <Divider />
     </Box>
   );

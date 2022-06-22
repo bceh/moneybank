@@ -96,6 +96,9 @@ export const getAllCateById = (userId) => (state) =>
 export const getAllTransById = (userId) => (state) =>
   state.data[userId].transactions;
 
+export const getTransById = (userId, transId) => (state) =>
+  state.data[userId].transactions.find((trans) => trans.transId === transId);
+
 export const getAccById = (userId, accId) => (state) =>
   state.data[userId].accounts[accId].accName;
 
