@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-
+import dayjs from "dayjs";
 import { getAccById, getCateById } from "../store/dataSlice";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -34,7 +34,7 @@ const TransactionDisplay = (props) => {
           </Grid>
           <Grid item sx={{ textAlign: "left" }}>
             <Typography sx={{ color: "#666" }} component="span">
-              {date}&nbsp;at&nbsp;{time}
+              {dayjs(date).format("MMM DD, YYYY")}&nbsp;at&nbsp;{time}
             </Typography>
           </Grid>
         </Grid>

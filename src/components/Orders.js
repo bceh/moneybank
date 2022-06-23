@@ -1,92 +1,79 @@
-import * as React from "react";
 import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
-
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(
-    0,
-    "16 Mar, 2019",
-    "Elvis Presley",
-    "Tupelo, MS",
-    "VISA ⠀•••• 3719",
-    312.44
-  ),
-  createData(
-    1,
-    "16 Mar, 2019",
-    "Paul McCartney",
-    "London, UK",
-    "VISA ⠀•••• 2574",
-    866.99
-  ),
-  createData(
-    2,
-    "16 Mar, 2019",
-    "Tom Scholz",
-    "Boston, MA",
-    "MC ⠀•••• 1253",
-    100.81
-  ),
-  createData(
-    3,
-    "16 Mar, 2019",
-    "Michael Jackson",
-    "Gary, IN",
-    "AMEX ⠀•••• 2000",
-    654.39
-  ),
-  createData(
-    4,
-    "15 Mar, 2019",
-    "Bruce Springsteen",
-    "Long Branch, NJ",
-    "VISA ⠀•••• 5919",
-    212.79
-  ),
-];
-
-function preventDefault(event) {
-  event.preventDefault();
-}
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import React from "react";
+import {
+  getAllAccById,
+  getAllTransById,
+  getAllCateById,
+  getCateIdNameMap,
+  getAccIdNameMap,
+  amountDisplay,
+} from "../store/dataSlice";
+import _ from "lodash";
 
 export default function Orders() {
+  const navigate = useNavigate();
+  const userId = useSelector((state) => state.status.currentUserId);
+  const accounts = useSelector(getAllAccById(userId));
+  const transactions = useSelector(getAllTransById(userId));
+  const categories = useSelector(getAllCateById(userId));
+  const accIdNameMap = useSelector(getAccIdNameMap(userId));
+  const cateIdNameMap = useSelector(getCateIdNameMap(userId));
+
+  const transactionsSorted = _.orderBy(transactions, "date", "desc").slice(
+    0,
+    5
+  );
+
+  const clickHandler = (event) => {
+    event.preventDefault();
+    console.log(transactionsSorted);
+    navigate("/accounts");
+  };
+
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+      <Title>Recent Transactions</Title>
+      <Box sx={{ width: "100%", overflow: "scroll" }}>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell>Payee</TableCell>
+              <TableCell>Account</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell align="right">Amount</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
+          </TableHead>
+          <TableBody>
+            {transactionsSorted.map((trans) => (
+              <TableRow key={trans.transId}>
+                <TableCell>{trans.date}</TableCell>
+                <TableCell>{trans.payee}</TableCell>
+                <TableCell>{accIdNameMap.get(trans.accId)}</TableCell>
+                <TableCell>{cateIdNameMap.get(trans.cateId)}</TableCell>
+                <TableCell align="right">
+                  {amountDisplay(trans.transType, trans.amount)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Box>
+      <Link
+        color="primary"
+        onClick={clickHandler}
+        sx={{ mt: 2, cursor: "pointer" }}
+      >
+        See more transactions
       </Link>
     </React.Fragment>
   );

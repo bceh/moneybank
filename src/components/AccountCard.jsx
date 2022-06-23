@@ -4,6 +4,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
+import Title from "./Title";
 const AccountCard = (props) => {
   const { accName, accBalance, index, selectedCard } = props;
   const [visibility, setVisibility] = useState(false);
@@ -25,12 +26,13 @@ const AccountCard = (props) => {
         transition: "1s",
       }}
     >
+      <Title sx={{ flexGrow: 1, mt: 2 }}>Account Balances</Title>
       <Typography variant="caption">Account Name</Typography>
       <Typography sx={{ mb: 2 }} variant="h4">
         {accName}
       </Typography>
       <Typography variant="caption">Current Balance</Typography>
-      <Typography variant="h5">
+      <Typography variant="h5" sx={{ ml: "2rem", mb: 5 }}>
         {visibility
           ? accBalance < 0
             ? `-$${Math.abs(accBalance).toFixed(2)}`

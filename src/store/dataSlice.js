@@ -124,4 +124,31 @@ export const getAccBalancesById = (userId) => (state) => {
   );
 };
 
+export const getCateIdNameMap = (userId) => (state) => {
+  return _.reduce(
+    state.data[userId].categories,
+    (map, cate) => {
+      map.set(cate.cateId, cate.cateName);
+      map.set(cate.cateName, cate.cateId);
+      return map;
+    },
+    new Map()
+  );
+};
+
+export const getAccIdNameMap = (userId) => (state) => {
+  return _.reduce(
+    state.data[userId].accounts,
+    (map, acc) => {
+      map.set(acc.accId, acc.accName);
+      map.set(acc.accName, acc.accId);
+      return map;
+    },
+    new Map()
+  );
+};
+
+export const amountDisplay = (transType, amount) =>
+  transType < 0 ? `-$${Math.abs(amount).toFixed(2)}` : `$${amount.toFixed(2)}`;
+
 export default dataSlice.reducer;
