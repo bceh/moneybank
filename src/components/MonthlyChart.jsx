@@ -4,11 +4,11 @@ import _ from "lodash";
 import { useSelector } from "react-redux";
 import { getAllTransById } from "../store/dataSlice";
 
-const Chart = (props) => {
+const MonthlyChart = (props) => {
+  const { month: date, ...rest } = props;
   const userId = useSelector((state) => state.status.currentUserId);
   const transactions = useSelector(getAllTransById(userId));
 
-  const date = dayjs().month();
   const newTransInthisMonth = transactions.filter(
     (trans) => dayjs(trans.date).month() === date
   );
@@ -82,7 +82,7 @@ const Chart = (props) => {
     ],
   };
 
-  return <ReactEcharts {...props} option={option} />;
+  return <ReactEcharts {...rest} option={option} />;
 };
 
-export default Chart;
+export default MonthlyChart;
