@@ -38,11 +38,12 @@ const MonthlyChart = (props) => {
   );
 
   const maxDay = dayjs(new Date(2022, date + 1, 0)).date();
-  const expenseFilled = [...Array(maxDay).keys()].map(
-    (i) => expense[`${i + 1}`]?.toFixed(2) || 0
+
+  const expenseFilled = [...Array(maxDay).keys()].map((i) =>
+    Number(expense[`${i + 1}`] || 0).toFixed(2)
   );
-  const incomeFilled = [...Array(maxDay).keys()].map(
-    (i) => income[`${i + 1}`]?.toFixed(2) || 0
+  const incomeFilled = [...Array(maxDay).keys()].map((i) =>
+    Number(income[`${i + 1}`] || 0).toFixed(2)
   );
   const option = {
     tooltip: {

@@ -37,7 +37,7 @@ const CategoryGraph = (props) => {
   const stringData = sortedData.map((point) => {
     return {
       name: point.name,
-      value: point.value.toFixed(2),
+      value: Number(point.value).toFixed(2),
     };
   });
   const data = stringData;
