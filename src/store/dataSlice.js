@@ -80,6 +80,30 @@ export const dataSlice = createSlice({
       _.pullAllBy(transactions, [{ accId: accId }], "accId");
     },
 
+    cateAdded: (state, action) => {
+      const { userId, transType, cateName } = action.payload;
+      state[userId].categories.push({
+        transType: Number(transType),
+        cateName,
+        cateId: ++state[userId].lastCateId,
+      });
+    },
+
+    cateDeleted: (state, action) => {
+      const { userId, cateId } = action.payload;
+      const categories = state[userId].categories;
+      const index = _.findIndex(categories, ["cateId", cateId]);
+      categories.splice(index, 1);
+    },
+
+    cateModified: (state, action) => {
+      const { userId, cateId, cateName } = action.payload;
+      const cate = state[userId].categories.find(
+        (cate) => cateId === cate.cateId
+      );
+      cate.cateName = cateName;
+    },
+
     transAdded: (state, action) => {
       //payload attrs: userId:, transactionAdded: {accId, amount, description, payee, category, time}
       const { userId, transAdded } = action.payload;
@@ -114,6 +138,9 @@ export const {
   transAdded,
   transModified,
   transDeleted,
+  cateModified,
+  cateAdded,
+  cateDeleted,
 } = dataSlice.actions;
 
 const data = (state) => state.data;
@@ -164,6 +191,10 @@ export const getAccsWithBalance = createSelector(
 
 export const getAccNames = createSelector([data, userId], (data, userId) =>
   data[userId].accounts.map((acc) => acc.accName)
+);
+
+export const getCateNames = createSelector([data, userId], (data, userId) =>
+  data[userId].categories.map((cate) => cate.cateName)
 );
 
 export const getCateIdNameMap = createSelector(
