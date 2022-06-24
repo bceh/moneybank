@@ -42,7 +42,7 @@ const TransactionModifier = (props) => {
           transModified: {
             transType,
             accId,
-            amount,
+            amount: Number(amount),
             description,
             payee,
             cateId,

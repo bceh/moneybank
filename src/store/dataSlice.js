@@ -5,10 +5,36 @@ import initialState from "../data/user1Data";
 let lastUserId = 0;
 
 const emptyData = {
-  lastAccId: -1,
-  lastTransId: -1,
-  accounts: [],
-  transactions: [],
+  lastAccId: 0,
+  lastTransId: 0,
+  lastCateId: 0,
+  accounts: [
+    {
+      accId: 0,
+      accName: "cash",
+      openingBalance: 100,
+    },
+  ],
+  categories: [
+    {
+      transType: -1,
+      cateId: 0,
+      cateName: "food&dinning",
+    },
+  ],
+  transactions: [
+    {
+      transType: -1,
+      accId: 0,
+      amount: 24.65,
+      description: "Welcome! This is an example.",
+      payee: "Some Restaurant",
+      cateId: 0,
+      date: "2022-06-20",
+      time: "14:40",
+      transId: 0,
+    },
+  ],
 };
 
 export const dataSlice = createSlice({
@@ -93,15 +119,20 @@ export const {
 const data = (state) => state.data;
 const userId = (state) => state.status.currentUserId;
 
-export const getData = (state) => state.data;
+export const getAllAcc = createSelector(
+  [data, userId],
+  (data, userId) => data[userId].accounts
+);
 
-export const getAllAccById = (userId) => (state) => state.data[userId].accounts;
+export const getAllCate = createSelector(
+  [data, userId],
+  (data, userId) => data[userId].categories
+);
 
-export const getAllCateById = (userId) => (state) =>
-  state.data[userId].categories;
-
-export const getAllTransById = (userId) => (state) =>
-  state.data[userId].transactions;
+export const getAllTrans = createSelector(
+  [data, userId],
+  (data, userId) => data[userId].transactions
+);
 
 export const getTransById = (userId, transId) => (state) =>
   state.data[userId].transactions.find((trans) => trans.transId === transId);
@@ -111,7 +142,7 @@ export const getAccById = (userId, accId) => (state) => {
 };
 
 export const getCateById = (userId, cateId) => (state) =>
-  state.data[userId].categories[cateId];
+  state.data[userId].categories.find((cate) => cate.cateId === cateId);
 
 export const getAccsWithBalance = createSelector(
   [data, userId],
@@ -135,19 +166,7 @@ export const getAccNames = createSelector([data, userId], (data, userId) =>
   data[userId].accounts.map((acc) => acc.accName)
 );
 
-export const getCateIdNameMap = (userId) => (state) => {
-  return _.reduce(
-    state.data[userId].categories,
-    (map, cate) => {
-      map.set(cate.cateId, cate.cateName);
-      map.set(cate.cateName, cate.cateId);
-      return map;
-    },
-    new Map()
-  );
-};
-
-export const getCateIdNameMapNew = createSelector(
+export const getCateIdNameMap = createSelector(
   [data, userId],
   (data, userId) => {
     return _.reduce(
@@ -162,19 +181,7 @@ export const getCateIdNameMapNew = createSelector(
   }
 );
 
-export const getAccIdNameMap = (userId) => (state) => {
-  return _.reduce(
-    state.data[userId].accounts,
-    (map, acc) => {
-      map.set(acc.accId, acc.accName);
-      map.set(acc.accName, acc.accId);
-      return map;
-    },
-    new Map()
-  );
-};
-
-export const getAccIdNameMapNew = createSelector(
+export const getAccIdNameMap = createSelector(
   [data, userId],
   (data, userId) => {
     return _.reduce(
@@ -189,9 +196,10 @@ export const getAccIdNameMapNew = createSelector(
   }
 );
 
-export const amountDisplay = (type, amount) =>
-  type < 0
-    ? `-$${Math.abs(amount)?.toFixed(2) || 0}`
-    : `$${amount?.toFixed(2) || 0}`;
+export const amountDisplay = (type, amount) => {
+  return type < 0
+    ? `-$${Math.abs(+amount)?.toFixed(2) || 0}`
+    : `$${+amount?.toFixed(2) || 0}`;
+};
 
 export default dataSlice.reducer;

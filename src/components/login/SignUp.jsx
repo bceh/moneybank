@@ -7,6 +7,7 @@ import {
   getUserNumber,
 } from "../../store/usersSlice";
 import { currentUserIdSetted } from "../../store/statusSlice";
+import { dataAdded } from "../../store/dataSlice";
 
 //mui/material
 import Avatar from "@mui/material/Avatar";
@@ -93,6 +94,7 @@ export default function SignUp() {
       navigate("/home");
       dispatch(userRegistered(data));
       dispatch(currentUserIdSetted({ userId: userId }));
+      dispatch(dataAdded());
     } else setIsRegisterFailed(true);
   };
 

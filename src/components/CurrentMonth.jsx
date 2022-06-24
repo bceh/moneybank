@@ -1,4 +1,4 @@
-import Chart from "./MonthlyChart";
+import MonthlyChart from "./MonthlyChart";
 import Paper from "@mui/material/Paper";
 import Title from "./Title";
 import Link from "@mui/material/Link";
@@ -30,7 +30,7 @@ const CurrentMonth = () => {
       >
         Transactions in This Month
       </Title>
-      <Chart
+      <MonthlyChart
         month={currentMonth}
         style={{ position: "absolute", width: "100%", height: "100%" }}
       />

@@ -39,7 +39,7 @@ const TransactionAdd = (props) => {
           transAdded: {
             transType,
             accId,
-            amount,
+            amount: Number(amount),
             description,
             payee,
             cateId,

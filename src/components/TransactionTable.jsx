@@ -9,7 +9,7 @@ import Alert from "@mui/material/Alert";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import { useSelector } from "react-redux";
-import { getAllAccById, getAllCateById } from "../store/dataSlice";
+import { getAllAcc, getAllCate } from "../store/dataSlice";
 
 const Joi = require("joi-browser");
 const schema = Joi.object({
@@ -37,8 +37,8 @@ export const validateData = (data) => {
 const TransactionTable = (props) => {
   const { data, setData, error, transType, onSetTransType } = props;
   const userId = useSelector((state) => state.status.currentUserId);
-  const accs = useSelector(getAllAccById(userId));
-  const allCates = useSelector(getAllCateById(userId));
+  const accs = useSelector(getAllAcc);
+  const allCates = useSelector(getAllCate);
 
   const cates = allCates.filter((cate) => cate.transType === transType);
   const changeHandeler = (e) => {

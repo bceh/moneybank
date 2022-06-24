@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import React from "react";
 import {
-  getAllTransById,
+  getAllTrans,
   getCateIdNameMap,
   getAccIdNameMap,
   amountDisplay,
@@ -20,9 +20,9 @@ import _ from "lodash";
 export default function RecentTransactions() {
   const navigate = useNavigate();
   const userId = useSelector((state) => state.status.currentUserId);
-  const transactions = useSelector(getAllTransById(userId));
-  const accIdNameMap = useSelector(getAccIdNameMap(userId));
-  const cateIdNameMap = useSelector(getCateIdNameMap(userId));
+  const transactions = useSelector(getAllTrans);
+  const accIdNameMap = useSelector(getAccIdNameMap);
+  const cateIdNameMap = useSelector(getCateIdNameMap);
 
   const transactionsSorted = _.orderBy(transactions, "date", "desc").slice(
     0,

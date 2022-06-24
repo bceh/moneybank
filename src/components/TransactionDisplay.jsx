@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { getAccIdNameMapNew, getCateIdNameMapNew } from "../store/dataSlice";
+import { getAccIdNameMap, getCateIdNameMap } from "../store/dataSlice";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -21,8 +21,8 @@ const TransactionDisplay = (props) => {
     transId,
     transType,
   } = props;
-  const accIdNameMap = useSelector(getAccIdNameMapNew);
-  const cateIdNameMap = useSelector(getCateIdNameMapNew);
+  const accIdNameMap = useSelector(getAccIdNameMap);
+  const cateIdNameMap = useSelector(getCateIdNameMap);
   const accName = accIdNameMap.get(accId);
   const cateName = cateIdNameMap.get(cateId);
 

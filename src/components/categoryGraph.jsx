@@ -1,5 +1,5 @@
 import ReactEcharts from "echarts-for-react";
-import { getCateIdNameMap, getAllTransById } from "../store/dataSlice";
+import { getCateIdNameMap, getAllTrans } from "../store/dataSlice";
 import { useSelector } from "react-redux";
 import _ from "lodash";
 import dayjs from "dayjs";
@@ -7,8 +7,8 @@ import dayjs from "dayjs";
 const CategoryGraph = (props) => {
   const { month: date, transType } = props;
   const userId = useSelector((state) => state.status.currentUserId);
-  const cateMap = useSelector(getCateIdNameMap(userId));
-  const transactions = useSelector(getAllTransById(userId));
+  const cateMap = useSelector(getCateIdNameMap);
+  const transactions = useSelector(getAllTrans);
 
   const newTransInMonth = transactions.filter(
     (trans) => dayjs(trans.date).month() === date

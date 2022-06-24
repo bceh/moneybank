@@ -6,9 +6,8 @@ import {
   accAdded,
   accModified,
   accDeleted,
-  getData,
-  getAllAccById,
-  getAllTransById,
+  getAllAcc,
+  getAllTrans,
   getTransById,
 } from "../store/dataSlice";
 import Button from "@mui/material/Button";
@@ -26,16 +25,8 @@ import _ from "lodash";
 const Accounts = () => {
   const userId = useSelector((state) => state.status.currentUserId);
   const dispatch = useDispatch();
-  const data = useSelector(getData);
-  const accounts = useSelector(getAllAccById(userId));
-  const transactions = useSelector(getAllTransById(userId));
-
-  const handleAddData = () => {
-    dispatch(dataAdded());
-  };
-  const handleDeleteData = () => {
-    dispatch(dataDeleted(userId));
-  };
+  const accounts = useSelector(getAllAcc);
+  const transactions = useSelector(getAllTrans);
 
   const [transFilter, setTransFilter] = useState([-1, 1]);
 

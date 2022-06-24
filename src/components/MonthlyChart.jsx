@@ -2,12 +2,11 @@ import ReactEcharts from "echarts-for-react";
 import dayjs from "dayjs";
 import _ from "lodash";
 import { useSelector } from "react-redux";
-import { getAllTransById } from "../store/dataSlice";
+import { getAllTrans } from "../store/dataSlice";
 
 const MonthlyChart = (props) => {
   const { month: date, ...rest } = props;
-  const userId = useSelector((state) => state.status.currentUserId);
-  const transactions = useSelector(getAllTransById(userId));
+  const transactions = useSelector(getAllTrans);
 
   const newTransInthisMonth = transactions.filter(
     (trans) => dayjs(trans.date).month() === date
@@ -18,7 +17,7 @@ const MonthlyChart = (props) => {
     (obj, trans) => {
       if (Number(trans.transType) === -1) {
         const date = dayjs(trans.date).date();
-        obj[date] = (obj[date] || 0) + trans.amount;
+        obj[date] = (obj[date] || 0) + Number(trans.amount);
       }
       return obj;
     },
@@ -30,7 +29,7 @@ const MonthlyChart = (props) => {
     (obj, trans) => {
       if (Number(trans.transType) === 1) {
         const date = dayjs(trans.date).date();
-        obj[date] = (obj[date] || 0) + trans.amount;
+        obj[date] = (obj[date] || 0) + Number(trans.amount);
       }
       return obj;
     },
