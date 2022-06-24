@@ -16,7 +16,7 @@ const MonthlyChart = (props) => {
   const expense = _.reduce(
     newTransInthisMonth,
     (obj, trans) => {
-      if (trans.transType == -1) {
+      if (Number(trans.transType) === -1) {
         const date = dayjs(trans.date).date();
         obj[date] = (obj[date] || 0) + trans.amount;
       }
@@ -28,7 +28,7 @@ const MonthlyChart = (props) => {
   const income = _.reduce(
     newTransInthisMonth,
     (obj, trans) => {
-      if (trans.transType == 1) {
+      if (Number(trans.transType) === 1) {
         const date = dayjs(trans.date).date();
         obj[date] = (obj[date] || 0) + trans.amount;
       }

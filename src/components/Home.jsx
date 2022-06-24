@@ -5,19 +5,16 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Orders from "./Orders";
-import { useDispatch, useSelector } from "react-redux";
+import RecentTransactions from "./RecentTransactions";
+import { useSelector } from "react-redux";
 
-import { getAllAccById, getAccBalancesById } from "../store/dataSlice";
+import { getAccsWithBalance } from "../store/dataSlice";
 import Radio from "@mui/material/Radio";
 import { blueGrey } from "@mui/material/colors";
 import CurrentMonth from "./CurrentMonth";
 
 export default function Home() {
-  const userId = useSelector((state) => state.status.currentUserId);
-  const accounts = useSelector(getAllAccById(userId));
-
-  const accBalance = useSelector(getAccBalancesById(userId));
+  const accounts = useSelector(getAccsWithBalance);
 
   const [selectedCard, setSelectedCard] = useState(0);
   const selectedCardHandler = (e) => {
@@ -44,7 +41,7 @@ export default function Home() {
                 key={acc.accId}
                 index={index}
                 accName={acc.accName}
-                accBalance={accBalance[acc.accId] || 0}
+                accBalance={acc.currentBalance || 0}
                 selectedCard={selectedCard}
               />
             ))}
@@ -59,7 +56,7 @@ export default function Home() {
                 <Radio
                   key={index}
                   value={index}
-                  checked={selectedCard == index}
+                  checked={Number(selectedCard) === index}
                   onChange={selectedCardHandler}
                   size="small"
                   sx={{
@@ -74,7 +71,7 @@ export default function Home() {
 
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-            <Orders />
+            <RecentTransactions />
           </Paper>
         </Grid>
       </Grid>

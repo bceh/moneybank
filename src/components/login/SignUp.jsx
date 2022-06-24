@@ -71,7 +71,7 @@ export default function SignUp() {
     const { error } = Joi.validate(data, schema, { abortEarly: false });
     if (!error) return null;
     const errors = {};
-    error.details.map((error) => {
+    error.details.forEach((error) => {
       errors[error.path[0]] = error.message;
     });
     return errors;

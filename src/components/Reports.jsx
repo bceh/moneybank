@@ -12,7 +12,6 @@ import Box from "@mui/material/Box";
 import { indigo } from "@mui/material/colors";
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
-import Transaction from "./Transaction";
 
 const Reports = () => {
   const [monthField, setMonthField] = useState(dayjs().format("YYYY-MM"));

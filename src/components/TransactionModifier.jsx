@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { transModified, transDeleted, getTransById } from "../store/dataSlice";
+import { transModified, transDeleted } from "../store/dataSlice";
 import TransactionTable, { validateData } from "./TransactionTable";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -7,7 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const TransactionModifier = (props) => {
   const { open, onClose, data, setData } = props;

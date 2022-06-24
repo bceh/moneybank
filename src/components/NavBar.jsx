@@ -28,6 +28,7 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import LogoutIcon from "@mui/icons-material/Logout";
+import CategoryIcon from "@mui/icons-material/Category";
 
 const drawerWidth = 200;
 
@@ -243,6 +244,11 @@ export default function NavBar() {
         <ListSubheader component="div" inset>
           Settings
         </ListSubheader>
+        {listItem(
+          <CategoryIcon color={getColor("/manage")} />,
+          "Manage",
+          "/manage"
+        )}
         {listItem(
           <ManageAccountsIcon color={getColor("/profile")} />,
           "My Account",

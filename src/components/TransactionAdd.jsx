@@ -16,14 +16,14 @@ const TransactionAdd = (props) => {
   const userId = useSelector((state) => state.status.currentUserId);
   const [data, setData] = useState({
     accId: 0,
-    cateId: 0,
+    cateId: "",
   });
 
   const [error, setError] = useState(null);
   const handleClose = () => {
     onClose();
     setError(null);
-    setData({ accId: 0, cateId: 0 });
+    setData({ accId: 0, cateId: "" });
   };
   const handleAddTransition = () => {
     const { accId, amount, cateId, date, description, payee, time, transId } =

@@ -24,6 +24,8 @@ const TransactionFilter = (props) => {
       case "all":
         setTransTypeChecked([checked, checked]);
         break;
+      default:
+        break;
     }
   };
   const filterHandler = () => {
@@ -31,14 +33,12 @@ const TransactionFilter = (props) => {
     transTypeChecked[0] && transTypes.push(-1);
     transTypeChecked[1] && transTypes.push(1);
     const accIds = [];
-    accounts.map(({ accId }) => {
+    accounts.forEach(({ accId }) => {
       if (accChecked.get(accId)) accIds.push(accId);
     });
     onFilter({ transTypes, accIds });
   };
-  const testHandler = () => {
-    console.log(accChecked);
-  };
+
   const accCheckHandler = (e) => {
     const { name, checked } = e.target;
     if (name === "all") {

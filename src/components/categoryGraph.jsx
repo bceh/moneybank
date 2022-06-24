@@ -17,7 +17,7 @@ const CategoryGraph = (props) => {
   const cateData = _.reduce(
     newTransInMonth,
     (obj, trans) => {
-      if (trans.transType == transType) {
+      if (Number(trans.transType) === transType) {
         const cateName = cateMap.get(trans.cateId);
         obj[cateName] = (obj[cateName] || 0) + trans.amount;
       }

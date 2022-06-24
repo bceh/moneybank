@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { getAccById, getCateById } from "../store/dataSlice";
+import { getAccIdNameMapNew, getCateIdNameMapNew } from "../store/dataSlice";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -21,9 +21,10 @@ const TransactionDisplay = (props) => {
     transId,
     transType,
   } = props;
-  const userId = useSelector((state) => state.status.currentUserId);
-  const accName = useSelector(getAccById(userId, accId));
-  const cateName = useSelector(getCateById(userId, cateId));
+  const accIdNameMap = useSelector(getAccIdNameMapNew);
+  const cateIdNameMap = useSelector(getCateIdNameMapNew);
+  const accName = accIdNameMap.get(accId);
+  const cateName = cateIdNameMap.get(cateId);
 
   return (
     <Grid container>

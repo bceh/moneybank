@@ -24,7 +24,11 @@ const schema = Joi.object({
 export const validateData = (data) => {
   const { error } = schema.validate(data);
   if (error) {
-    return error.details[0].message;
+    if (error.details[0].path[0] === "cateId") {
+      return '"Category" is not Allowed to be empty';
+    } else {
+      return error.details[0].message;
+    }
   } else {
     return null;
   }
@@ -34,8 +38,9 @@ const TransactionTable = (props) => {
   const { data, setData, error, transType, onSetTransType } = props;
   const userId = useSelector((state) => state.status.currentUserId);
   const accs = useSelector(getAllAccById(userId));
-  const cates = useSelector(getAllCateById(userId));
+  const allCates = useSelector(getAllCateById(userId));
 
+  const cates = allCates.filter((cate) => cate.transType === transType);
   const changeHandeler = (e) => {
     const { name, value } = e.currentTarget ? e.currentTarget : e.target;
     const newData = { ...data };
@@ -43,8 +48,12 @@ const TransactionTable = (props) => {
     setData(newData);
   };
   const typeButtonHandler = (e, type) => {
+    const newData = { ...data };
+    newData["cateId"] = "";
+    setData(newData);
     onSetTransType(type);
   };
+
   return (
     <Grid container spacing={1} sx={{ mt: 0.1 }}>
       <Grid item xs={12}>
@@ -99,17 +108,21 @@ const TransactionTable = (props) => {
       <Grid item xs={6} sx={{ textAlign: "left" }}>
         <FormControl fullWidth>
           <InputLabel>Category</InputLabel>
+
           <Select
             name="cateId"
             value={data["cateId"]}
             onChange={changeHandeler}
             label="Category"
           >
-            {cates.map((cate) => (
-              <MenuItem key={cate.cateId} value={cate.cateId}>
-                {cate.cateName}
-              </MenuItem>
-            ))}
+            <MenuItem value=""> </MenuItem>
+            {cates.map((cate) => {
+              return (
+                <MenuItem key={cate.cateId} value={cate.cateId}>
+                  {cate.cateName}
+                </MenuItem>
+              );
+            })}
           </Select>
         </FormControl>
       </Grid>

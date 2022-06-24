@@ -5,6 +5,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import Title from "./Title";
+import { amountDisplay } from "../store/dataSlice";
+
 const AccountCard = (props) => {
   const { accName, accBalance, index, selectedCard } = props;
   const [visibility, setVisibility] = useState(false);
@@ -33,11 +35,7 @@ const AccountCard = (props) => {
       </Typography>
       <Typography variant="caption">Current Balance</Typography>
       <Typography variant="h5" sx={{ ml: "2rem", mb: 5 }}>
-        {visibility
-          ? accBalance < 0
-            ? `-$${Math.abs(accBalance).toFixed(2)}`
-            : `$${accBalance.toFixed(2)}`
-          : "********"}
+        {visibility ? amountDisplay(accBalance, accBalance) : "********"}
         <IconButton onClick={visibilityHandler}>
           {visibility ? <VisibilityOffIcon /> : <VisibilityIcon />}
         </IconButton>

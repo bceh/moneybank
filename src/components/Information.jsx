@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { getBasicInfoById, userChangedById } from "../store/usersSlice";
 
 import { useSelector, useDispatch } from "react-redux";
-import _, { isEqual } from "lodash";
+import _ from "lodash";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -47,7 +47,7 @@ const Information = () => {
     newData[input.name] = input.value;
     setData(newData);
     setErrors(newErrors || {});
-    if (isEqual(newData, originData)) setIsChanged(false);
+    if (_.isEqual(newData, originData)) setIsChanged(false);
     else setIsChanged(true);
   };
 

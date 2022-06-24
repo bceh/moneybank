@@ -10,21 +10,17 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import React from "react";
 import {
-  getAllAccById,
   getAllTransById,
-  getAllCateById,
   getCateIdNameMap,
   getAccIdNameMap,
   amountDisplay,
 } from "../store/dataSlice";
 import _ from "lodash";
 
-export default function Orders() {
+export default function RecentTransactions() {
   const navigate = useNavigate();
   const userId = useSelector((state) => state.status.currentUserId);
-  const accounts = useSelector(getAllAccById(userId));
   const transactions = useSelector(getAllTransById(userId));
-  const categories = useSelector(getAllCateById(userId));
   const accIdNameMap = useSelector(getAccIdNameMap(userId));
   const cateIdNameMap = useSelector(getCateIdNameMap(userId));
 
@@ -35,7 +31,6 @@ export default function Orders() {
 
   const clickHandler = (event) => {
     event.preventDefault();
-    console.log(transactionsSorted);
     navigate("/accounts");
   };
 

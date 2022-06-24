@@ -11,6 +11,7 @@ import Profile from "./components/Profile";
 import Accounts from "./components/Accounts";
 import NotFound from "./components/NotFound";
 import Reports from "./components/Reports";
+import AccCateManage from "./components/AccCateManage";
 
 function App() {
   const userId = useSelector(getCurrentUserId);
@@ -25,6 +26,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/accounts" element={<Accounts />} />
             <Route path="/reports" element={<Reports />} />
+            <Route path="/manage" element={<AccCateManage />} />
             <Route path="/" element={<NotFound />} />
           </Route>
         )}

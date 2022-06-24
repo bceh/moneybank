@@ -36,36 +36,6 @@ const Accounts = () => {
   const handleDeleteData = () => {
     dispatch(dataDeleted(userId));
   };
-  const handleAddAccount = () => {
-    dispatch(
-      accAdded({
-        userId,
-        accAdded: { accName: "comm2", openingBalance: 10000 },
-      })
-    );
-  };
-
-  const handleModifyAccount = () => {
-    dispatch(
-      accModified({
-        userId,
-        accId: 0,
-        accModified: { accName: "comm_", openingBalance: 1000 },
-      })
-    );
-  };
-  const handleDeleteAccount = (accId) => {
-    dispatch(
-      accDeleted({
-        userId,
-        accId,
-      })
-    );
-  };
-
-  const handlePrintAccount = () => {
-    console.log(accounts);
-  };
 
   const [transFilter, setTransFilter] = useState([-1, 1]);
 
@@ -138,7 +108,6 @@ const Accounts = () => {
         };
       });
     }
-    console.log(sort);
   };
 
   return (

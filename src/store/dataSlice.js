@@ -1,5 +1,4 @@
-import { TramSharp } from "@mui/icons-material";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 import _ from "lodash";
 import initialState from "../data/user1Data";
 
@@ -27,6 +26,7 @@ export const dataSlice = createSlice({
       const userId = action.payload;
       state[userId] = { ...emptyData, userId };
     },
+
     accAdded: (state, action) => {
       //payload attrs: userId: , accAdded: {accName, openingBalance}
       const { userId, accAdded } = action.payload;
@@ -48,8 +48,10 @@ export const dataSlice = createSlice({
       //payload attrs: userId, accId
       const { userId, accId } = action.payload;
       const accounts = state[userId].accounts;
+      const transactions = state[userId].transactions;
       const index = _.findIndex(accounts, ["accId", accId]);
       accounts.splice(index, 1);
+      _.pullAllBy(transactions, [{ accId: accId }], "accId");
     },
 
     transAdded: (state, action) => {
@@ -88,7 +90,11 @@ export const {
   transDeleted,
 } = dataSlice.actions;
 
+const data = (state) => state.data;
+const userId = (state) => state.status.currentUserId;
+
 export const getData = (state) => state.data;
+
 export const getAllAccById = (userId) => (state) => state.data[userId].accounts;
 
 export const getAllCateById = (userId) => (state) =>
@@ -100,29 +106,34 @@ export const getAllTransById = (userId) => (state) =>
 export const getTransById = (userId, transId) => (state) =>
   state.data[userId].transactions.find((trans) => trans.transId === transId);
 
-export const getAccById = (userId, accId) => (state) =>
-  state.data[userId].accounts[accId].accName;
+export const getAccById = (userId, accId) => (state) => {
+  return state.data[userId].accounts.find((acc) => acc.accId === accId);
+};
 
 export const getCateById = (userId, cateId) => (state) =>
-  state.data[userId].categories[cateId].cateName;
+  state.data[userId].categories[cateId];
 
-export const getAccBalanceById = (userId, accId) => (state) => {
-  state.data[userId].transactions
-    .filter((trans) => trans.accId === accId)
-    .reduce((sum, trans) => sum + parseInt(trans.type) * trans.amount, 0);
-};
+export const getAccsWithBalance = createSelector(
+  [data, userId],
+  (data, userId) => {
+    const accounts = _.cloneDeep(data[userId].accounts);
+    const transactions = data[userId].transactions;
+    transactions.forEach((trans) => {
+      const acc = accounts.find((acc) => acc.accId === trans.accId);
+      acc["currentBalance"] =
+        (acc["currentBalance"] || acc.openingBalance) +
+        trans.amount * trans.transType;
+    });
+    accounts.forEach((acc) => {
+      acc["currentBalance"] = acc["currentBalance"] || acc.openingBalance;
+    });
+    return accounts;
+  }
+);
 
-export const getAccBalancesById = (userId) => (state) => {
-  return _.reduce(
-    state.data[userId].transactions,
-    (obj, trans) => {
-      obj[trans.accId] =
-        (obj[trans.accId] || 0) + trans.amount * trans.transType;
-      return obj;
-    },
-    {}
-  );
-};
+export const getAccNames = createSelector([data, userId], (data, userId) =>
+  data[userId].accounts.map((acc) => acc.accName)
+);
 
 export const getCateIdNameMap = (userId) => (state) => {
   return _.reduce(
@@ -136,6 +147,21 @@ export const getCateIdNameMap = (userId) => (state) => {
   );
 };
 
+export const getCateIdNameMapNew = createSelector(
+  [data, userId],
+  (data, userId) => {
+    return _.reduce(
+      data[userId].categories,
+      (map, cate) => {
+        map.set(cate.cateId, cate.cateName);
+        map.set(cate.cateName, cate.cateId);
+        return map;
+      },
+      new Map()
+    );
+  }
+);
+
 export const getAccIdNameMap = (userId) => (state) => {
   return _.reduce(
     state.data[userId].accounts,
@@ -148,7 +174,24 @@ export const getAccIdNameMap = (userId) => (state) => {
   );
 };
 
-export const amountDisplay = (transType, amount) =>
-  transType < 0 ? `-$${Math.abs(amount).toFixed(2)}` : `$${amount.toFixed(2)}`;
+export const getAccIdNameMapNew = createSelector(
+  [data, userId],
+  (data, userId) => {
+    return _.reduce(
+      data[userId].accounts,
+      (map, acc) => {
+        map.set(acc.accId, acc.accName);
+        map.set(acc.accName, acc.accId);
+        return map;
+      },
+      new Map()
+    );
+  }
+);
+
+export const amountDisplay = (type, amount) =>
+  type < 0
+    ? `-$${Math.abs(amount)?.toFixed(2) || 0}`
+    : `$${amount?.toFixed(2) || 0}`;
 
 export default dataSlice.reducer;

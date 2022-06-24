@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 const initialState = { currentUserId: -1 };
 
 export const usersSlice = createSlice({
@@ -13,6 +13,11 @@ export const usersSlice = createSlice({
 
 export const { currentUserIdSetted } = usersSlice.actions;
 
-export const getCurrentUserId = (state) => state.status.currentUserId;
+const selectSelf = (state) => state;
+
+export const getCurrentUserId = createSelector(
+  selectSelf,
+  (state) => state.status.currentUserId
+);
 
 export default usersSlice.reducer;
