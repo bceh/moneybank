@@ -1,13 +1,17 @@
-import { userChangedById, compareEmailPasswordId } from "../store/usersSlice";
-import { currentUserIdSetted } from "../store/statusSlice";
-
-import PaperContainer from "./PaperContainer";
-import CustomDialog from "./CustomDialog";
-
+//Components
+import CustomDialog from "../../utils/CustomDialog";
+import PaperContainer from "../../utils/PaperContainer";
+//Redux
+import {
+  userChangedById,
+  compareEmailPasswordId,
+} from "../../store/usersSlice";
+import { currentUserIdSetted } from "../../store/statusSlice";
 import { useSelector, useDispatch } from "react-redux";
+//Libraries
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-
+//mui/material
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";

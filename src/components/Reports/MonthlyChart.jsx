@@ -1,8 +1,11 @@
+//Redux
+import { getAllTrans } from "../../store/dataSlice";
+import { useSelector } from "react-redux";
+//Libraries
 import ReactEcharts from "echarts-for-react";
 import dayjs from "dayjs";
 import _ from "lodash";
-import { useSelector } from "react-redux";
-import { getAllTrans } from "../store/dataSlice";
+//mui/material
 
 const MonthlyChart = (props) => {
   const { month: date, ...rest } = props;

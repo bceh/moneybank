@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+//Components
 import AccountCard from "./AccountCard";
-
+import CurrentMonth from "./CurrentMonth";
+import RecentTransactions from "./RecentTransactions";
+//Redux
+import { getAccsWithBalance } from "../../store/dataSlice";
+import { useSelector } from "react-redux";
+//Libraries
+import React, { useState } from "react";
+//mui/material
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import RecentTransactions from "./RecentTransactions";
-import { useSelector } from "react-redux";
-
-import { getAccsWithBalance } from "../store/dataSlice";
 import Radio from "@mui/material/Radio";
 import { blueGrey } from "@mui/material/colors";
-import CurrentMonth from "./CurrentMonth";
 
 export default function Home() {
   const accounts = useSelector(getAccsWithBalance);

@@ -1,11 +1,15 @@
+//Components
+import Title from "../../utils/Title";
+//Redux
+import { amountDisplay } from "../../store/dataSlice";
+//Libraries
+import React, { useState } from "react";
+//mui/material
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
-import Title from "./Title";
-import { amountDisplay } from "../store/dataSlice";
 
 const AccountCard = (props) => {
   const { accName, accBalance, index, selectedCard } = props;

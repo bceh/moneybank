@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from "react";
+//Components
 import AccountTable from "./AccountTable";
-import Grid from "@mui/material/Grid";
+import AccountAddDialog from "./AccountAddDialog";
+import AccountModifyDialog from "./AccountModifyDialog";
+//Redux
+import { getCurrentUserId } from "../../store/statusSlice";
 import {
   accDeleted,
   getAccsWithBalance,
   accModified,
-} from "../store/dataSlice";
+} from "../../store/dataSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentUserId } from "../store/statusSlice";
+//Libraries
+import React, { useState, useEffect } from "react";
+//mui/material
+import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import AccountAddDialog from "./AccountAddDialog";
-import AccountModifyDialog from "./AccountModifyDialog";
 
 const AccManage = (props) => {
   const dispatch = useDispatch();

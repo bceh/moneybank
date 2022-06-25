@@ -1,14 +1,17 @@
+//Redux
+import { amountDisplay } from "../../store/dataSlice";
+import { getCurrentUserId } from "../../store/statusSlice";
+import { useSelector } from "react-redux";
+
+//mui/material
 import Table from "@mui/material/Table";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
-import { amountDisplay } from "../store/dataSlice";
-import { getCurrentUserId } from "../store/statusSlice";
 import Checkbox from "@mui/material/Checkbox";
-
-import { useSelector } from "react-redux";
 import FormControlLabel from "@mui/material/FormControlLabel";
+
 const AccountTable = (props) => {
   const userId = useSelector(getCurrentUserId);
   const { accounts, editAccount, onSetEditAccount } = props;

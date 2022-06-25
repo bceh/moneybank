@@ -1,10 +1,12 @@
-import PaperContainer from "./PaperContainer";
-
-import React, { useState } from "react";
-import { getBasicInfoById, userChangedById } from "../store/usersSlice";
-
+//Components
+import PaperContainer from "../../utils/PaperContainer";
+//Redux
+import { getBasicInfoById, userChangedById } from "../../store/usersSlice";
 import { useSelector, useDispatch } from "react-redux";
+//Libraries
+import React, { useState } from "react";
 import _ from "lodash";
+//mui/material
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";

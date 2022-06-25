@@ -1,8 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+//Redux
 import { currentUserIdSetted } from "../store/statusSlice";
 import { getBasicInfoById } from "../store/usersSlice";
+import { useSelector, useDispatch } from "react-redux";
+//Libraries
+import React, { useState, useRef, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
+//mui/material
 import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -18,7 +21,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import Person from "@mui/icons-material/Person";
 import Popper from "@mui/material/Popper";
-
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";

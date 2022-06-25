@@ -1,7 +1,19 @@
-import { getAllCate } from "../store/dataSlice";
+//Redux
+import { getAllCate } from "../../store/dataSlice";
+import {
+  getCateIdNameMap,
+  cateModified,
+  cateAdded,
+  getCateNames,
+  cateDeleted,
+} from "../../store/dataSlice";
+import { getCurrentUserId } from "../../store/statusSlice";
 import { useDispatch, useSelector } from "react-redux";
+//Libraries
+import React, { useState } from "react";
+import _ from "lodash";
+//mui/material
 import Button from "@mui/material/Button";
-import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Dialog from "@mui/material/Dialog";
@@ -9,15 +21,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
-import {
-  getCateIdNameMap,
-  cateModified,
-  cateAdded,
-  getCateNames,
-  cateDeleted,
-} from "../store/dataSlice";
-import { getCurrentUserId } from "../store/statusSlice";
-import _ from "lodash";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";

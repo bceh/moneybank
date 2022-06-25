@@ -1,3 +1,18 @@
+//Components
+import Title from "../../utils/Title";
+//Redux
+import {
+  getAllTrans,
+  getCateIdNameMap,
+  getAccIdNameMap,
+  amountDisplay,
+} from "../../store/dataSlice";
+import { useSelector } from "react-redux";
+//Libraries
+import React from "react";
+import _ from "lodash";
+import { useNavigate } from "react-router-dom";
+//mui/material
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -5,17 +20,6 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Title from "./Title";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import React from "react";
-import {
-  getAllTrans,
-  getCateIdNameMap,
-  getAccIdNameMap,
-  amountDisplay,
-} from "../store/dataSlice";
-import _ from "lodash";
 
 export default function RecentTransactions() {
   const navigate = useNavigate();

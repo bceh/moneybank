@@ -1,10 +1,11 @@
+//Components
+import TransactionDisplay from "./TransactionDisplay";
+//Libraries
 import React from "react";
-
+//mui/material
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
-
-import TransactionDisplay from "./TransactionDisplay";
 
 export default function Transaction(props) {
   const { transId, transType, onClick } = props;

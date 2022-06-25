@@ -1,30 +1,23 @@
-import { useDispatch, useSelector } from "react-redux";
-import React, { useState, useEffect } from "react";
-import {
-  dataAdded,
-  dataDeleted,
-  accAdded,
-  accModified,
-  accDeleted,
-  getAllAcc,
-  getAllTrans,
-  getTransById,
-} from "../store/dataSlice";
-import Button from "@mui/material/Button";
+//Components
 import Transaction from "./Transaction";
-import Container from "@mui/material/Container";
-import AccountDial from "./AccountDial";
 import TransactionFilter from "./TransactionFilter";
 import TransactionModifier from "./TransactionModifier";
+import AccountDial from "./AccountDial";
+//Redux
+import { getAllAcc, getAllTrans } from "../../store/dataSlice";
+import { useSelector } from "react-redux";
+//Libraries
+import _ from "lodash";
+import React, { useState } from "react";
+//mui/material
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Badge from "@mui/material/Badge";
-import _ from "lodash";
 
 const Accounts = () => {
-  const userId = useSelector((state) => state.status.currentUserId);
-  const dispatch = useDispatch();
   const accounts = useSelector(getAllAcc);
   const transactions = useSelector(getAllTrans);
 

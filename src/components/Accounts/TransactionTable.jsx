@@ -1,6 +1,9 @@
+//Redux
+import { getAllAcc, getAllCate } from "../../store/dataSlice";
+import { useSelector } from "react-redux";
+//mui/material
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import React from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -8,8 +11,6 @@ import InputLabel from "@mui/material/InputLabel";
 import Alert from "@mui/material/Alert";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
-import { useSelector } from "react-redux";
-import { getAllAcc, getAllCate } from "../store/dataSlice";
 
 const Joi = require("joi-browser");
 const schema = Joi.object({

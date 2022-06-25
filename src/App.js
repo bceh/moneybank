@@ -1,17 +1,19 @@
-import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+//Components
 import "./App.css";
-import { useSelector } from "react-redux";
-import { getCurrentUserId } from "./store/statusSlice";
 import SignIn from "./components/login/SignIn";
 import SignUp from "./components/login/SignUp";
 import NavBar from "./components/NavBar";
-import Home from "./components/Home";
-import Profile from "./components/Profile";
-import Accounts from "./components/Accounts";
+import Home from "./components/Home/Home";
+import Profile from "./components/Profile/Profile";
+import Accounts from "./components/Accounts/Accounts";
 import NotFound from "./components/NotFound";
-import Reports from "./components/Reports";
-import AccCateManage from "./components/AccCateManage";
+import Reports from "./components/Reports/Reports";
+import AccCateManage from "./components/Manage/AccCateManage";
+//Redux
+import { getCurrentUserId } from "./store/statusSlice";
+import { useSelector } from "react-redux";
+//Libraries
+import { Route, Routes, Navigate } from "react-router-dom";
 
 function App() {
   const userId = useSelector(getCurrentUserId);

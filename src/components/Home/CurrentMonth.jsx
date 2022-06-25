@@ -1,10 +1,12 @@
-import MonthlyChart from "./MonthlyChart";
-import Paper from "@mui/material/Paper";
-import Title from "./Title";
-import Link from "@mui/material/Link";
+//Components
+import MonthlyChart from "../Reports/MonthlyChart";
+import Title from "../../utils/Title";
+//Libraries
 import { useNavigate } from "react-router-dom";
-
 import dayjs from "dayjs";
+//mui/material
+import Paper from "@mui/material/Paper";
+import Link from "@mui/material/Link";
 
 const CurrentMonth = () => {
   const navigate = useNavigate();

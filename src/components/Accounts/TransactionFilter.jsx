@@ -1,4 +1,6 @@
+//Libraries
 import React, { useState } from "react";
+//mui/material
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
@@ -7,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+
 const TransactionFilter = (props) => {
   const { onFilter, accounts } = props;
   const [transTypeChecked, setTransTypeChecked] = useState([true, true]);

@@ -1,6 +1,8 @@
+//Components
 import AccountDeletion from "./AccountDeletion";
-import Security from "./Security";
 import Information from "./Information";
+import Security from "./Security";
+//mui/material
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 

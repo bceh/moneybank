@@ -1,10 +1,12 @@
-import PaperContainer from "./PaperContainer";
-import CustomDialog from "./CustomDialog";
-import React, { useState } from "react";
-import { userChangedById, comparePasswordId } from "../store/usersSlice";
-
+//Components
+import PaperContainer from "../../utils/PaperContainer";
+import CustomDialog from "../../utils/CustomDialog";
+//Redux
+import { userChangedById, comparePasswordId } from "../../store/usersSlice";
 import { useSelector, useDispatch } from "react-redux";
-
+//Libraries
+import React, { useState } from "react";
+//mui/material
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";

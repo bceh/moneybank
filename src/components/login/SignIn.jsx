@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+//Conponents
+import Copyright from "../../utils/Copyright";
+//Redux
 import { isLoggedIn } from "../../store/usersSlice";
 import { currentUserIdSetted } from "../../store/statusSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+//Libraries
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 //mui/material
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -19,22 +22,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Alert from "@mui/material/Alert";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      Francis Cheng&nbsp;
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const theme = createTheme();
 

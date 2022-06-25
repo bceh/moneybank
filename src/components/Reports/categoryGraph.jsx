@@ -1,6 +1,8 @@
-import ReactEcharts from "echarts-for-react";
-import { getCateIdNameMap, getAllTrans } from "../store/dataSlice";
+//Redux
+import { getCateIdNameMap, getAllTrans } from "../../store/dataSlice";
 import { useSelector } from "react-redux";
+//Libraries
+import ReactEcharts from "echarts-for-react";
 import _ from "lodash";
 import dayjs from "dayjs";
 
