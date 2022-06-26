@@ -1,5 +1,3 @@
-//Components
-import TransactionAdd from "./TransactionAdd";
 //Libraries
 import React, { useState } from "react";
 //mui/material
@@ -9,29 +7,11 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 import PaidIcon from "@mui/icons-material/Paid";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
-const AccountDial = () => {
+const AccountDial = (props) => {
+  const { onAddDialogHandler } = props;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const [transType, setTransType] = useState(-1);
-  const [openTrans, setOpenTrans] = useState(false);
-  const handleCloseTrans = () => {
-    setOpenTrans(false);
-    handleClose();
-  };
-
-  const handleOpenTrans = (type) => {
-    setTransType(type);
-    setOpenTrans(true);
-    handleClose();
-  };
-
-  const handleTransType = (type) => {
-    if (type !== null) {
-      setTransType(type);
-    }
-  };
 
   return (
     <React.Fragment>
@@ -47,21 +27,15 @@ const AccountDial = () => {
           icon={<PaidIcon />}
           tooltipTitle={"Expense"}
           tooltipOpen
-          onClick={() => handleOpenTrans(-1)}
+          onClick={() => onAddDialogHandler(-1)}
         />
         <SpeedDialAction
           icon={<AccountBalanceWalletIcon />}
           tooltipTitle={"Income"}
           tooltipOpen
-          onClick={() => handleOpenTrans(1)}
+          onClick={() => onAddDialogHandler(1)}
         />
       </SpeedDial>
-      <TransactionAdd
-        open={openTrans}
-        onClose={handleCloseTrans}
-        transType={transType}
-        onSetTransType={handleTransType}
-      />
     </React.Fragment>
   );
 };

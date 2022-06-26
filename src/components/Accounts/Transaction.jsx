@@ -10,7 +10,7 @@ import Paper from "@mui/material/Paper";
 export default function Transaction(props) {
   const { transId, transType, onClick } = props;
 
-  const handleClick = (transId) => {
+  const clickHandler = (transId) => {
     onClick(transId);
   };
 
@@ -27,7 +27,7 @@ export default function Transaction(props) {
           cursor: "pointer",
         }}
       >
-        <Box onClick={() => handleClick(transId)}>
+        <Box onClick={() => clickHandler(transId)}>
           <TransactionDisplay {...props} />
         </Box>
       </Paper>

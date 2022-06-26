@@ -1,11 +1,18 @@
 //Components
 import Transaction from "./Transaction";
 import TransactionFilter from "./TransactionFilter";
-import TransactionModifier from "./TransactionModifier";
+import TransactionDialog, { validateData } from "./TransactionDialog";
 import AccountDial from "./AccountDial";
 //Redux
-import { getAllAcc, getAllTrans } from "../../store/dataSlice";
-import { useSelector } from "react-redux";
+import {
+  getAllAcc,
+  getAllTrans,
+  transDeleted,
+  transAdded,
+  transModified,
+} from "../../store/dataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUserId } from "../../store/statusSlice";
 //Libraries
 import _ from "lodash";
 import React, { useState } from "react";
@@ -18,6 +25,9 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Badge from "@mui/material/Badge";
 
 const Accounts = () => {
+  const dispatch = useDispatch();
+  const userId = useSelector(getCurrentUserId);
+
   const accounts = useSelector(getAllAcc);
   const transactions = useSelector(getAllTrans);
 
@@ -44,21 +54,6 @@ const Accounts = () => {
   );
 
   const transactionsDisplayed = transactionsSorted;
-
-  const [openModified, setOpenModified] = useState(false);
-
-  const [transModifiedData, setTransModifiedData] = useState({});
-
-  const handleCloseModified = () => {
-    setOpenModified(false);
-    setTransModifiedData({});
-  };
-
-  const handleTransClick = (transId) => {
-    const trans = transactions.find((trans) => trans.transId === transId);
-    setTransModifiedData(trans);
-    setOpenModified(true);
-  };
 
   const getBateBadge = () => {
     if (sort.type === "date") {
@@ -94,6 +89,71 @@ const Accounts = () => {
     }
   };
 
+  const init = { open: false, data: {}, errorMessage: null };
+
+  const [transDialog, setTransDialog] = useState(init);
+
+  const closeHandler = () => {
+    setTransDialog(init);
+  };
+
+  const transClickHandler = (transId) => {
+    //        transId: number; transType: number; accId: number, amount: number; cateId: number; description: string; payee: string; date: string; time: string,
+
+    const trans = transactions.find((trans) => trans.transId === transId);
+    setTransDialog({
+      type: "edit",
+      open: true,
+      data: trans,
+      errorMessage: null,
+    });
+  };
+  const addDialogHandler = (transType) => {
+    setTransDialog({ type: "add", open: true, data: { transType } });
+  };
+
+  const changeHandler = (newData) => {
+    setTransDialog({
+      ...transDialog,
+      data: { ...transDialog.data, ...newData },
+      errorMessage: null,
+    });
+  };
+  const deleteHandler = () => {
+    dispatch(
+      transDeleted({
+        userId,
+        transId: transDialog.data.transId,
+      })
+    );
+    setTransDialog(init);
+  };
+
+  const submitHandler = () => {
+    const { transId, ...newData } = transDialog.data;
+    const errorMessage = validateData(newData);
+    if (errorMessage) {
+      setTransDialog({ ...transDialog, errorMessage });
+      return;
+    } else if (transDialog.type === "edit") {
+      dispatch(
+        transModified({
+          userId,
+          transId,
+          transModified: newData,
+        })
+      );
+    } else if (transDialog.type === "add") {
+      dispatch(
+        transAdded({
+          userId,
+          transAdded: newData,
+        })
+      );
+    }
+    setTransDialog(init);
+  };
+
   return (
     <React.Fragment>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -112,18 +172,22 @@ const Accounts = () => {
               <Transaction
                 key={trans.transId}
                 {...trans}
-                onClick={handleTransClick}
+                onClick={transClickHandler}
               />
             );
           })}
         </Container>
       </Container>
-      <AccountDial />
-      <TransactionModifier
-        open={openModified}
-        onClose={handleCloseModified}
-        data={transModifiedData}
-        setData={setTransModifiedData}
+      <AccountDial onAddDialogHandler={addDialogHandler} />
+      <TransactionDialog
+        open={transDialog.open}
+        type={null}
+        onClose={closeHandler}
+        data={transDialog.data}
+        onSubmitHandler={submitHandler}
+        onChangeHandler={changeHandler}
+        onDeleteHandler={deleteHandler}
+        errorMessage={transDialog.errorMessage}
       />
     </React.Fragment>
   );
