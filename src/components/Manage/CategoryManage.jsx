@@ -41,6 +41,17 @@ const CategoryManage = () => {
     allCate.filter((cate) => cate.transType === 1),
     "cateName"
   );
+  const categorylist = (categories) => {
+    return categories.map((cate) => (
+      <Typography
+        key={cate.cateId}
+        onClick={() => editHandler(cate.cateId)}
+        sx={{ cursor: "pointer", "&:hover": { bgcolor: "#f8f8f8" } }}
+      >
+        {cate.cateName}
+      </Typography>
+    ));
+  };
   const [editCate, setEditCate] = useState({
     transType: "-1",
     cateId: 0,
@@ -96,32 +107,18 @@ const CategoryManage = () => {
         <Typography variant="h5" sx={{ mb: 2 }}>
           Expense Category
         </Typography>
-        {expenseCate.map((cate) => (
-          <Typography
-            key={cate.cateId}
-            onClick={() => editHandler(cate.cateId)}
-            sx={{ cursor: "pointer" }}
-          >
-            {cate.cateName}
-          </Typography>
-        ))}
+        {categorylist(expenseCate)}
       </Grid>
       <Grid item xs={12} sm={6}>
         <Typography variant="h5" sx={{ mb: 2 }}>
           Income Category
         </Typography>
-        {incomeCate.map((cate) => (
-          <Typography
-            key={cate.cateId}
-            onClick={() => editHandler(cate.cateId)}
-            sx={{ cursor: "pointer" }}
-          >
-            {cate.cateName}
-          </Typography>
-        ))}
+        {categorylist(incomeCate)}
       </Grid>
       <Grid item xs={12}>
-        <Button onClick={addHandler}>Add A New Category</Button>
+        <Button variant="outlined" onClick={addHandler}>
+          New Category
+        </Button>
       </Grid>
       <Typography sx={{ color: "gray", width: "100%" }} variant="caption">
         Please Click Category Names to Edit.

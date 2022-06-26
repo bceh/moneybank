@@ -1,7 +1,5 @@
 //Redux
 import { amountDisplay } from "../../store/dataSlice";
-import { getCurrentUserId } from "../../store/statusSlice";
-import { useSelector } from "react-redux";
 
 //mui/material
 import Table from "@mui/material/Table";
@@ -13,16 +11,13 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 const AccountTable = (props) => {
-  const userId = useSelector(getCurrentUserId);
-  const { accounts, editAccount, onSetEditAccount } = props;
-
-  const { isEdit, edittedAccId } = editAccount;
+  const { accounts, isEditing, selectedAccId, onSelectHandler } = props;
 
   return (
     <Table size="small">
       <TableHead>
         <TableRow>
-          {isEdit && <TableCell>Select</TableCell>}
+          {isEditing && <TableCell>Select</TableCell>}
           <TableCell>Account Name</TableCell>
           <TableCell>Opening Balance</TableCell>
           <TableCell>Current Balance</TableCell>
@@ -31,14 +26,14 @@ const AccountTable = (props) => {
       <TableBody>
         {accounts.map((acc) => (
           <TableRow key={acc.accId}>
-            {isEdit && (
+            {isEditing && (
               <TableCell>
                 <FormControlLabel
                   control={
                     <Checkbox
-                      name={acc.accId.toString()}
-                      checked={edittedAccId === acc.accId}
-                      onChange={(e) => onSetEditAccount(+e.target.name)}
+                      value={String(acc.accId)}
+                      checked={selectedAccId === acc.accId}
+                      onChange={(e) => onSelectHandler(Number(e.target.value))}
                     />
                   }
                 />

@@ -23,7 +23,6 @@ import TableRow from "@mui/material/TableRow";
 
 export default function RecentTransactions() {
   const navigate = useNavigate();
-  const userId = useSelector((state) => state.status.currentUserId);
   const transactions = useSelector(getAllTrans);
   const accIdNameMap = useSelector(getAccIdNameMap);
   const cateIdNameMap = useSelector(getCateIdNameMap);
