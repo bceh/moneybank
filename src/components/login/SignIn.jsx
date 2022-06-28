@@ -82,6 +82,23 @@ export default function SignIn() {
     setErrors(newErrors || {});
   };
 
+  const exampleUserInfo = (
+    <Alert severity="info" sx={{ mb: 1 }}>
+      <Typography component="p">
+        Use email:{" "}
+        <Typography sx={{ fontWeight: "bold" }} component="span">
+          {"user1@example.com"}
+        </Typography>
+      </Typography>
+      <Typography component="p">
+        {"password: "}
+        <Typography sx={{ fontWeight: "bold" }} component="span">
+          {"88888888"}
+        </Typography>
+      </Typography>
+    </Alert>
+  );
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -107,6 +124,9 @@ export default function SignIn() {
             sx={{ mt: 1 }}
           >
             <Grid container direction="row" spacing={2}>
+              <Grid item xs={12}>
+                {exampleUserInfo}
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
