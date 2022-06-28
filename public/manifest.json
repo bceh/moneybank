@@ -1,7 +1,13 @@
 {
   "short_name": "B",
   "name": "MoneyBank",
-  "icons": [],
+  "icons": [
+    {
+      "src": "bIcon.ico",
+      "size": "16x16",
+      "type": "image/x-icon"
+    }
+  ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

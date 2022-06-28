@@ -54,6 +54,8 @@ const editingReducer = (state, action) => {
       return { ...state, ...action.payload };
     case "error":
       return { ...state, errorMessage: action.payload.errorMessage };
+    default:
+      return;
   }
 };
 

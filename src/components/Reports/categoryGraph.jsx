@@ -8,7 +8,6 @@ import dayjs from "dayjs";
 
 const CategoryGraph = (props) => {
   const { month: date, transType } = props;
-  const userId = useSelector((state) => state.status.currentUserId);
   const cateMap = useSelector(getCateIdNameMap);
   const transactions = useSelector(getAllTrans);
 

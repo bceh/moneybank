@@ -1,5 +1,4 @@
 //Components
-import "./App.css";
 import SignIn from "./components/login/SignIn";
 import SignUp from "./components/login/SignUp";
 import NavBar from "./components/NavBar";
@@ -18,7 +17,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 function App() {
   const userId = useSelector(getCurrentUserId);
   return (
-    <div className="App">
+    <div>
       <Routes>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />

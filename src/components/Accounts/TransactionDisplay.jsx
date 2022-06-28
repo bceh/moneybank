@@ -13,17 +13,8 @@ import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import ShortTextIcon from "@mui/icons-material/ShortText";
 
 const TransactionDisplay = (props) => {
-  const {
-    accId,
-    amount,
-    cateId,
-    description,
-    payee,
-    date,
-    time,
-    transId,
-    transType,
-  } = props;
+  const { accId, amount, cateId, description, payee, date, time, transType } =
+    props;
   const accIdNameMap = useSelector(getAccIdNameMap);
   const cateIdNameMap = useSelector(getCateIdNameMap);
   const accName = accIdNameMap.get(accId);
