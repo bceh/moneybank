@@ -102,7 +102,7 @@ const CategoryManage = () => {
   };
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} sx={{ textAlign: "center" }}>
       <Grid item xs={12} sm={6}>
         <Typography variant="h5" sx={{ mb: 2 }}>
           Expense Category

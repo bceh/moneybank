@@ -24,6 +24,7 @@ const AccountCard = (props) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        alignItems: "center",
         height: "inherit",
         position: "absolute",
         width: "inherit",

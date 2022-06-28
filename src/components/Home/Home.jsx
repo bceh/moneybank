@@ -36,6 +36,7 @@ export default function Home() {
               height: 240,
               width: "100%",
               overflow: "hidden",
+              textAlign: "center",
             }}
           >
             {accounts.map((acc, index) => (

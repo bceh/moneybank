@@ -164,12 +164,7 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            <Grid container justifyContent="space-between">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+            <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link
                   variant="body2"
