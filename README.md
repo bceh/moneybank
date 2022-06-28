@@ -1,5 +1,9 @@
 # An front-end project of a personal financial app
 
+## Checkout the demo 
+
+[demo](https://main.d3rm4tzj5nzd1n.amplifyapp.com/)
+
 ## Key points
 
 This is a fully functionalised personal financial app: 
