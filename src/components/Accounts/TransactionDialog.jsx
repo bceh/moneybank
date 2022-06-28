@@ -66,6 +66,11 @@ const TransactionDialog = (props) => {
     onChangeHandler({ [name]: value });
   };
 
+  const typeChangeHandler = (e, value) => {
+    if (value === null) return;
+    onChangeHandler({ transType: Number(value), cateId: undefined });
+  };
+
   return (
     <Dialog fullWidth={true} open={open} onClose={onClose}>
       <DialogTitle sx={{ color: data.transType === -1 ? "red" : "green" }}>
@@ -81,9 +86,7 @@ const TransactionDialog = (props) => {
               exclusive
               size="small"
               color="primary"
-              onChange={(e, value) =>
-                onChangeHandler({ transType: Number(value), cateId: undefined })
-              }
+              onChange={typeChangeHandler}
             >
               <ToggleButton value="-1">Expense</ToggleButton>
               <ToggleButton value="1">Income</ToggleButton>
@@ -106,9 +109,7 @@ const TransactionDialog = (props) => {
               label="Amount"
               type="number"
               value={data.amount}
-              onChange={(e) =>
-                onChangeHandler({ amount: Number(e.target.value) })
-              }
+              onChange={(e) => onChangeHandler({ amount: e.target.value })}
             />
           </Grid>
           <Grid item xs={6} sx={{ textAlign: "left" }}>

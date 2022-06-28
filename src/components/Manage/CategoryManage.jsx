@@ -79,7 +79,6 @@ const CategoryManage = () => {
       dispatch(cateModified({ userId, ...editCate }));
       setCateDialog({ ...cateDialog, open: false });
     } else if (cateDialog.type === "add") {
-      console.log(editCate);
       dispatch(
         cateAdded({
           userId,

@@ -140,14 +140,14 @@ const Accounts = () => {
         transModified({
           userId,
           transId,
-          transModified: newData,
+          transModified: { ...newData, amount: Number(newData.amount) },
         })
       );
     } else if (transDialog.type === "add") {
       dispatch(
         transAdded({
           userId,
-          transAdded: newData,
+          transAdded: { ...newData, amount: Number(newData.amount) },
         })
       );
     }
@@ -181,7 +181,7 @@ const Accounts = () => {
       <AccountDial onAddDialogHandler={addDialogHandler} />
       <TransactionDialog
         open={transDialog.open}
-        type={null}
+        type={transDialog.type}
         onClose={closeHandler}
         data={transDialog.data}
         onSubmitHandler={submitHandler}
